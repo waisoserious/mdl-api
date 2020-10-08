@@ -9,6 +9,7 @@ if (isset($_GET['url']) && $_GET['url'] != '') {
   $html = file_get_contents($_GET['url']);
   // Get Info 
   preg_match("/film-title\">(.*?)>(.*?)<\/a>/si", $html, $title);
+  preg_match("/<img class=\"img-responsive\" itempropx=\"image\" src=\"(.*?)\"/si", $html, $poster);
   preg_match("/class=\"inline\">Native Title:<\/b>(.*?)<\/li>/si", $html, $nativeAll);
   preg_match_all("/>(.*?)<\/a>/si", $nativeAll[1], $native);
   preg_match("/class=\"inline\">Also Known As:<\/b> <span class=\"mdl-aka-titles\">(.*?)<\/span> <\/li>/si", $html, $alsoknownAll);
@@ -43,6 +44,7 @@ if (isset($_GET['url']) && $_GET['url'] != '') {
 
   echo json_encode([
     'title'         => $title[2],
+    'poster'        => $poster[1],
     'native'        => $native[1],
     'alsoknown'     => $alsoknown[1],
     'genres'        => $genres[1],
